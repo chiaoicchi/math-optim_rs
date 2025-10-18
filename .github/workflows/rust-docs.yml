@@ -52,7 +52,7 @@ jobs:
       - name: Upload Rust Docs artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./target/doc
+          path: ./target/doc/math-optim
 
   deploy-rust-docs:
     name: Deploys Docs (Rust)
