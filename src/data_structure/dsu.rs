@@ -100,7 +100,7 @@ impl DSU {
     ///
     /// `O(α(n))`, where α is the inverse Ackermann function.
     pub fn set_size(&mut self, x: usize) -> usize {
-        let root = self.find(x) as usize;
+        let root = self.find(x);
         -self.parent[root] as usize
     }
 
