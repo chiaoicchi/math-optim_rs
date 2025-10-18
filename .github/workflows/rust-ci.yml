@@ -1,0 +1,56 @@
+name: CI (Rust)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  RUST_VERSION: "1.90.0"
+
+jobs:
+  rust-ci:
+    name: Lint & Format & Build & Test (Rust)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Lint
+        run: |
+          source $HOME/.cargo/env
+          rustup component add clippy
+          cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: Format
+        run: |
+          source $HOME/.cargo/env
+          rustup component add rustfmt
+          cargo fmt -- --check
+
+      - name: Build
+        run: |
+          source $HOME/.cargo/env
+          cargo build --all --release
+
+      - name: Test
+        run: |
+          source $HOME/.cargo/env
+          cargo test --all --verbose
