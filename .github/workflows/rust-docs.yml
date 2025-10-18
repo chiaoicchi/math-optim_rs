@@ -1,0 +1,67 @@
+name: Docs (Rust)
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  RUST_VERSION: "1.90.0"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-rust-docs:
+    name: Build Docs (Rust)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Rust
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+          source $HOME/.cargo/env
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Build Docs
+        run: |
+          source $HOME/.cargo/env
+          cargo doc --no-deps --all-features
+
+      - name: Upload Rust Docs artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./target/doc
+
+  deploy-rust-docs:
+    name: Deploys Docs (Rust)
+    runs-on: ubuntu-latest
+    needs: build-rust-docs
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy Docs to GitHub pages
+        id: deployment
+        uses: actions/deploy-pages@v4
