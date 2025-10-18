@@ -49,10 +49,14 @@ jobs:
           source $HOME/.cargo/env
           cargo doc --no-deps --all-features
 
+      - name: Add redirect index.html
+        run: |
+          echo '<meta http-equiv="refresh" content="0; url=math_optim/index.html">' > ./target/doc/index.html
+
       - name: Upload Rust Docs artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./target/doc/math_optim
+          path: ./target/doc
 
   deploy-rust-docs:
     name: Deploys Docs (Rust)
