@@ -1,0 +1,11 @@
+[package]
+name = "math_optim-rs"
+version = "0.1.0"
+edition = "2024"
+description = "Competitive programming library in Rust"
+
+[lib]
+name = "math_optim"
+path = "src/lib.rs"
+
+[dependencies]
