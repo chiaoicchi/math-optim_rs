@@ -1,5 +1,5 @@
 [package]
-name = "math_optim-rs"
+name = "math_optim"
 version = "0.1.0"
 edition = "2024"
 description = "Competitive programming library in Rust"
