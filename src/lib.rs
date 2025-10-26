@@ -1,3 +1,4 @@
+pub mod algebra;
 pub mod ds;
 pub mod graph;
 pub mod math;
