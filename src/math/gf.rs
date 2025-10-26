@@ -235,6 +235,19 @@ impl<'a, const MOD: u32> Product<&'a Self> for GF<MOD> {
     }
 }
 
+/// Creates a new element of `ℤ/MOD ℤ`.
+///
+/// This macro provides a shorthand for creating Galois field elements.
+/// It is particularly useful when the modulus can be inferred from context.
+///
+/// # Syntax
+///
+/// - `gf!(value)`: Creates an element where the modulus is inferred from the context type.
+/// - `gf!(value, MOD)`: Creates an element with an explicit modulus.
+///
+/// # Note
+///
+/// `GF::new()` or `GF::from()` may be more appropriate.
 #[macro_export]
 macro_rules! gf {
     ($value:expr) => {
