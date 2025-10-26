@@ -10,8 +10,8 @@
 //! It satisfies the following two axioms.
 //!
 //! - **associativity**: for all `a, b, c` in `S`, the equation `(a * b) * c == a * (b * c)` holds.
-//! - **identity element**: There exists an element `e` in S such that for every element `a` in
-//! `S`, the equalities `a * e == e * a == a` hold.
+//! - **identity element**: There exists an element `e` in S such that for every element `a` in `S`,
+//! the equalities `a * e == e * a == a` hold.
 
 /// A trait representating a *monoid*.
 ///
