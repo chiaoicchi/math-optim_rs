@@ -1,5 +1,5 @@
-pub mod data_structure;
+pub mod ds;
 pub mod graph;
-pub mod mathematics;
-pub mod sequence;
+pub mod math;
+pub mod seq;
 pub mod utils;

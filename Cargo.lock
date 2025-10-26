@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "math_optim-rs"
+name = "math_optim"
 version = "0.1.0"
