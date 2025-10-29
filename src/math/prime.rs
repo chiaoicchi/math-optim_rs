@@ -97,7 +97,7 @@ pub fn divisors(n: u64) -> Vec<u64> {
     let mut prefix = vec![];
     let mut suffix = vec![];
     for i in (1..).take_while(|i| i * i <= n) {
-        if n % i == 0 {
+        if n.is_multiple_of(i) {
             prefix.push(i);
             if i * i != n {
                 suffix.push(n / i);
@@ -137,7 +137,7 @@ pub fn factorize(mut n: u64) -> Vec<u64> {
     let two = n.trailing_zeros();
     let mut res = vec![2; two as usize];
     n >>= two;
-    while n % 3 == 0 {
+    while n.is_multiple_of(3) {
         res.push(3);
         n /= 3;
     }
