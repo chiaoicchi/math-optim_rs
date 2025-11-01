@@ -12,13 +12,17 @@ use crate::math::prime::primitive_root;
 /// Maximum number of levels supported for NTT.
 const MAX_NTT_LEVELS: usize = 32;
 
+/// Type alias for precomputed NTT roots: (forward_roots, inverse_roots).
+type NttRoots = ([u32; MAX_NTT_LEVELS], [u32; MAX_NTT_LEVELS]);
+
+/// Type alias for the NTT roots cache.
+type NttRootsCache = Mutex<HashMap<u32, NttRoots>>;
+
 /// Global cache for NTT roots, keyed by modulus.
 ///
 /// This cache stores precomputed roots of unity for each modulus to avoid redundant computation.
 /// The cache is lazily initialized on first access and protected by a Mutex for thread-safe access.
-static NTT_ROOTS_CACHE: LazyLock<
-    Mutex<HashMap<u32, ([u32; MAX_NTT_LEVELS], [u32; MAX_NTT_LEVELS])>>,
-> = LazyLock::new(|| Mutex::new(HashMap::new()));
+static NTT_ROOTS_CACHE: LazyLock<NttRootsCache> = LazyLock::new(|| Mutex::new(HashMap::new()));
 
 /// Returns precomputed NTT roots for the given modulus.
 ///
