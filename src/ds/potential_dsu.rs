@@ -135,7 +135,7 @@ where
     ///
     /// - `true`: If the constraint is consistent and the merge succeeded.
     /// - `false`: If `from` and `to` are alredy in the same set but the constraint  is
-    /// inconsistent with the existing potential difference. No merge is performed.
+    ///   inconsistent with the existing potential difference. No merge is performed.
     ///
     /// ## Complexity
     ///
