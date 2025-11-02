@@ -1,26 +1,43 @@
 //! Potential Disjoint Set Union (Union-Find)
 //!
-//! This data structure efficiently maintains a collection of disjoint set and its potential.
-//! It supports the following primary operations:
+//! A data structure that efficiently maintains a collection of disjoint sets with potential
+//! functions.
 //!
-//! - **find**: Determine which set an element belongs to and its potential from representative (root).
-//! - **union**: Define potential between two set.
-//! - **potential**: Calculate potential between two vertex.
+//! # Definition
+//!
+//! A potential DSU manages `n` elements (indexed `0..n`) partitioned into disjoint sets.
+//! Each element `x` has a **potential value** `p[x]` relative to the representative (root) of its
+//! set.
+//!
+//! For elements `x` and `y` in the same set with root `r`:
+//! - `p[x]`: potential from `r` to `x`
+//! - `p[y]`: potential from `r` to `y`
+//! - The potential difference from `x` to `y` is: `p[x]^(-1) * p[y]`
+//!
+//! The potentials from a group structure `(G, *, e)`, allowing both commutative and
+//! non-commutative operations.
 
 use crate::algebra::group::Group;
 
 /// A *Potential DSU*, also known as a *Potential Union-Find* data structure.
 ///
-/// Each element initially belongs to its own singleton set.
-/// Sets can be merged (`union`) and queried for membership and its potential (`find`, `potential`)
+/// Manages a collection of disjoint sets where each element has a potential value relative to the
+/// root of its set. The potential values from a group structure.
 ///
 /// ## Type Parameters
 ///
 /// - `T`: A type implementing the [`Group`] trait. Group must not be commutative.
 #[derive(Debug, Clone)]
 pub struct PotentialDSU<T: Group> {
+    /// Parent array: negative values indicate root with set size (stored as `-size`),
+    /// non-negative values indicate parent index.
     parent: Box<[i32]>,
+
+    /// Potential from parent to this node using the group operation.
+    /// For root nodes, this value is not used.
     potential: Box<[T::G]>,
+
+    /// Number of disjoint sets.
     num_sets: usize,
 }
 
@@ -45,14 +62,26 @@ where
         }
     }
 
-    /// Returns the representative (root) of the set contianing `x` and potential from `root` to `x`.
+    /// Finds the representative (root) of the set contianing `x` and computes the potential from the root to `x`.
+    ///
+    /// ## Parameters
+    ///
+    /// - `x`: Index of the element (must satisfy `0 <= x < n`).
     ///
     /// ## Returns
     ///
-    /// A tuple `(root, potential)`
+    /// A tuple `(root, potential)` where:
     ///
     /// - `root`: The index of the representative element of the set contianing `x`.
-    /// - `potential`: Potential from `root` to `x`.
+    /// - `potential`: The potential value from root to `x`.
+    ///
+    /// ## Definition
+    ///
+    /// If the path from `x` to root is `x -> p1 -> p2 -> ... -> pm -> root`, then:
+    ///
+    /// `potential = potential[root] * potential[pm] * ... * potential[p1] -> potential[x]`,
+    ///
+    /// where `*` denotes the group operation [`Group::op`].
     ///
     /// ## Complexity
     ///
@@ -67,14 +96,16 @@ where
         (x, potential)
     }
 
-    /// If `from` and `to` belong to the same set returns potential from `from` to `to`, otherwise
-    /// `None`.
+    /// Returns the potential difference from `from` to `to` if they are in the same set.
     ///
     /// ## Returns
     ///
     /// A optional value
     ///
-    /// - `Some(potential)`: potential from `from` to `to`.
+    /// - `Some(p)`: potential from `from` to `to`, if they are in the same set, where `p`
+    ///   satisfies: `potential(to) = potential(from) * p`, equivalently
+    ///   `p = potential(from)^(-1) * potential(to)`.
+    ///
     /// - `None`: `from` and `to` do not belong to the same set.
     ///
     /// ## Complexity
@@ -91,12 +122,20 @@ where
         }
     }
 
-    /// Merges the set containing `from` and `to` as `potential[to] - potential[from] == p`.
+    /// Merges the set containing `from` and `to` with the constraint that the potential difference
+    /// from `from` to `to` equals `p`.
+    ///
+    /// ## Parameters
+    ///
+    /// - `from`: Index of the source element.
+    /// - `to`: Index of the target element.
+    /// - `p`: The required potential difference from `from` to `to`.
     ///
     /// ## Returns
     ///
-    /// - `true` if it is well-defined to `potential[to] - potential[from] = p`
-    /// - `false` if already `potential[to] - potential[from] != p` and abort this operation.
+    /// - `true`: If the constraint is consistent and the merge succeeded.
+    /// - `false`: If `from` and `to` are alredy in the same set but the constraint  is
+    /// inconsistent with the existing potential difference. No merge is performed.
     ///
     /// ## Complexity
     ///
