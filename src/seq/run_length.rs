@@ -67,7 +67,6 @@ pub fn run_length_encoding<T: Copy + PartialEq>(a: &[T]) -> Vec<(T, usize)> {
 /// `O(n)`, where `n` is the total length of the decoded sequence.
 pub fn run_length_decofing<T: Copy + PartialEq>(a: &[(T, usize)]) -> Vec<T> {
     a.iter()
-        .map(|a| std::iter::repeat(a.0).take(a.1))
-        .flatten()
+        .flat_map(|a| std::iter::repeat_n(a.0, a.1))
         .collect()
 }
