@@ -1,0 +1,13 @@
+[package]
+name = "math-optim-verify"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Competitive programming library checker in Rust"
+
+[dependencies]
+math-optim = { path = ".." }
+
+[[bin]]
+name = "unionfind"
+path = "src/bin/data_structure/unionfind.rs"

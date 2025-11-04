@@ -1,0 +1,62 @@
+[tasks.verify]
+description = "Verify for a problem"
+script_runner = "@shell"
+script = '''
+echo "PROBLEM=${PROBLEM}"
+if [ -z "${CATEGORY}" ] || [ -z "${PROBLEM}" ]; then
+    echo "Error: PROBLEM environment variable is not set"
+    echo "Usage: CATEGORY=data_structure PROBLEM=unionfind cargo make verify"
+    exit 1
+fi
+
+if [ ! -d "library-checker-problems" ]; then
+    echo "Error: library-checker-problems is not found"
+    echo "Do: git clone git@github.com:yosupo06/library-checker-problems.git"
+    exit 1
+fi
+
+echo "Generate test cases for ${PROBLEM}"
+cd library-checker-problems
+./generate.py -p ${PROBLEM}
+cd ..
+
+echo "Test ${PROBLEM}"
+
+IN_DIR=library-checker-problems/${CATEGORY}/${PROBLEM}/in
+OUT_DIR=library-checker-problems/${CATEGORY}/${PROBLEM}/out
+
+passed=0
+failed=0
+
+for input in "$IN_DIR"/*.in; do
+    [ -e "$input" ] || continue
+
+    basename=$(basename "$input" .in)
+    output="$OUT_DIR/${basename}.out"
+
+    if [ ! -f "$output" ]; then
+	echo "Warning: $output not founc, skipping"
+	continue
+    fi
+
+    if cargo run --release --bin ${PROBLEM} < "$input" 2>/dev/null | diff -q - "$output" > /dev/null 2>&1; then
+	echo "PASSED"
+	passed=$((passed + 1))
+    else
+	echo "FAILED"
+	failed=$((failed + 1))
+    fi
+done
+
+echo ""
+if [ $passed -eq 0 ] && [ $failed -eq 0 ]; then
+    echo "No test cases found"
+    exit 1
+elif [ $failed -eq 0 ]; then
+    echo "All $passed tests passed"
+    exit 0
+else
+    echo "Results: $passed passed, $failed failed"
+    exit 1
+fi
+'''
