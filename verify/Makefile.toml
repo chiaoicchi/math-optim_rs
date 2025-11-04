@@ -2,7 +2,7 @@
 description = "Verify for a problem"
 script_runner = "bash"
 script = '''
-set -euo pipefail
+set -uo pipefail
 
 echo "PROBLEM=${PROBLEM}"
 if [ -z "${CATEGORY}" ] || [ -z "${PROBLEM}" ]; then
