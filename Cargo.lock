@@ -3,5 +3,12 @@
 version = 4
 
 [[package]]
-name = "math_optim"
+name = "math-optim"
 version = "0.1.0"
+
+[[package]]
+name = "math-optim-verify"
+version = "0.1.0"
+dependencies = [
+ "math-optim",
+]

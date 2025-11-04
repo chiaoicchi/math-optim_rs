@@ -1,9 +1,14 @@
+[workspace]
+members = [".", "verify"]
+resolver = "2"
+
 [package]
-name = "math_optim"
+name = "math-optim"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.90"
+rust-version = "1.85"
 description = "Competitive programming library in Rust"
+license = "MIT"
 
 [lib]
 name = "math_optim"
