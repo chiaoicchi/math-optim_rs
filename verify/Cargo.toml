@@ -1,8 +1,8 @@
 [package]
 name = "math-optim-verify"
 version = "0.1.0"
-edition = "2021"
-rust-version = "1.71"
+edition = "2024"
+rust-version = "1.85"
 description = "Competitive programming library checker in Rust"
 
 [dependencies]
