@@ -2,8 +2,6 @@
 description = "Verify for a problem"
 script_runner = "bash"
 script = '''
-set -uo pipefail
-
 echo "PROBLEM=${PROBLEM}"
 if [ -z "${CATEGORY}" ] || [ -z "${PROBLEM}" ]; then
     echo "Error: PROBLEM environment variable is not set"
