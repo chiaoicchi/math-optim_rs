@@ -1,4 +1,4 @@
-use std::io::{read_to_string, stdin, stdout, BufWriter, Write};
+use std::io::{BufWriter, Write, read_to_string, stdin, stdout};
 
 use math_optim::ds::dsu::DSU;
 fn main() {
