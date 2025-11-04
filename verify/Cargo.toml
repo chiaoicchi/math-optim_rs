@@ -11,3 +11,11 @@ math-optim = { path = ".." }
 [[bin]]
 name = "unionfind"
 path = "src/bin/data_structure/unionfind.rs"
+
+[[bin]]
+name = "unionfind_with_potential"
+path = "src/bin/data_structure/unionfind_with_potential.rs"
+
+[[bin]]
+name = "unionfind_with_potential_non_commutative_group"
+path = "src/bin/data_structure/unionfind_with_potential_non_commutative_group.rs"
