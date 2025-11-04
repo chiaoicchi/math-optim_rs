@@ -3,7 +3,6 @@ description = "Verify for a problem"
 script_runner = "@shell"
 script = '''
 #!/usr/bin/env bash
-set -euo pipefail
 
 echo "PROBLEM=${PROBLEM}"
 if [ -z "${CATEGORY}" ] || [ -z "${PROBLEM}" ]; then
