@@ -19,3 +19,31 @@ path = "src/bin/data_structure/unionfind_with_potential.rs"
 [[bin]]
 name = "unionfind_with_potential_non_commutative_group"
 path = "src/bin/data_structure/unionfind_with_potential_non_commutative_group.rs"
+
+[[bin]]
+name = "point_set_range_composite"
+path = "src/bin/data_structure/point_set_range_composite.rs"
+
+[[bin]]
+name = "range_affine_range_sum"
+path = "src/bin/data_structure/range_affine_range_sum.rs"
+
+[[bin]]
+name = "scc"
+path = "src/bin/graph/scc.rs"
+
+[[bin]]
+name = "convolution_mod"
+path = "src/bin/convolution/convolution_mod.rs"
+
+[[bin]]
+name = "primality_test"
+path = "src/bin/number_theory/primality_test.rs"
+
+[[bin]]
+name = "factorize"
+path = "src/bin/number_theory/factorize.rs"
+
+[[bin]]
+name = "primitive_root"
+path = "src/bin/number_theory/primitive_root.rs"

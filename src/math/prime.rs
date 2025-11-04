@@ -39,6 +39,9 @@ pub fn is_prime(n: u64) -> bool {
     let d = (n - 1) >> r;
 
     let miller_rabin = |a: u64| -> bool {
+        if a % n == 0 {
+            return true;
+        }
         let n = n as u128;
         let mut base = a as u128;
         let mut pow = 1;

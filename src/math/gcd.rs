@@ -106,7 +106,7 @@ pub fn binary_gcd(mut a: u64, mut b: u64) -> u64 {
     let x = a.trailing_zeros();
     let y = b.trailing_zeros();
     a >>= x;
-    b >>= x;
+    b >>= y;
     while a != b {
         let x = (a ^ b).trailing_zeros();
         if a < b {

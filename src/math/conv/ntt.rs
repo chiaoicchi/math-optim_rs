@@ -34,7 +34,7 @@ static NTT_ROOTS_CACHE: LazyLock<NttRootsCache> = LazyLock::new(|| Mutex::new(Ha
 /// A tuple `(roots, inv_roots)` where:
 /// - `root[i]`: contains the forward root for NTT at level `i`.
 /// - `inv_root[i]`: contains the inverse root for INTT at level `i`.
-fn get_ntt_roots(modulo: u32) -> ([u32; MAX_NTT_LEVELS], [u32; MAX_NTT_LEVELS]) {
+fn get_ntt_roots(modulo: u32) -> NttRoots {
     let mut cache = NTT_ROOTS_CACHE.lock().unwrap();
     if let Some(&roots) = cache.get(&modulo) {
         roots
@@ -63,7 +63,7 @@ fn get_ntt_roots(modulo: u32) -> ([u32; MAX_NTT_LEVELS], [u32; MAX_NTT_LEVELS]) 
 /// - `inv_roots[i]`: contains `omega^(-2^i) * zeta_i^(-1) mod modulo`
 ///
 /// where `zeta_i` are adjustment factors for bit-reversal ordering.
-fn compute_ntt_roots(modulo: u32) -> ([u32; MAX_NTT_LEVELS], [u32; MAX_NTT_LEVELS]) {
+fn compute_ntt_roots(modulo: u32) -> NttRoots {
     let k = (modulo - 1).trailing_zeros() as usize;
     assert!(
         k < MAX_NTT_LEVELS,

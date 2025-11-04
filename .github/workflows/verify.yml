@@ -26,6 +26,20 @@ jobs:
             problem: unionfind_with_potential
           - category: data_structure
             problem: unionfind_with_potential_non_commutative_group
+          - category: data_structure
+            problem: point_set_range_composite
+          - category: data_structure
+            problem: range_affine_range_sum
+
+          - category: convolution
+            problem: convolution_mod
+
+          - category: number_theory
+            problem: primality_test
+          - category: number_theory
+            problem: factorize
+          - category: number_theory
+            problem: primitive_root
 
     steps:
       - uses: actions/checkout@v4
