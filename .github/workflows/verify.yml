@@ -22,6 +22,10 @@ jobs:
         include:
           - category: data_structure
             problem: unionfind
+          - category: data_structure
+            problem: unionfind_with_potential
+          - category: data_structure
+            problem: unionfind_with_potential_non_commutative_group
 
     steps:
       - uses: actions/checkout@v4
