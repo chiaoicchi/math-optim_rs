@@ -1,4 +1,4 @@
-name: CI (Rust)
+name: Verify by Library Checker
 
 on:
   pull_request:
