@@ -41,6 +41,9 @@ jobs:
           - category: number_theory
             problem: primitive_root
 
+          - category: geo
+            problem: static_convex_hull
+
     steps:
       - uses: actions/checkout@v4
         with:
