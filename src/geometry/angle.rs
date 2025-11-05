@@ -8,6 +8,8 @@
 
 use std::cmp::Ordering;
 
+use crate::geometry::vector_2d::Vector2D;
+
 /// Compares two points by their argument (angle from positive x-axis).
 ///
 /// ## Returns
@@ -20,8 +22,8 @@ use std::cmp::Ordering;
 /// ## Complexity
 ///
 /// `O(1)`
-pub fn arg_cmp((x0, y0): &(i64, i64), (x1, y1): &(i64, i64)) -> Ordering {
-    ((*y0, *x0) < (0, 0))
-        .cmp(&((*y1, *x1) < (0, 0)))
-        .then_with(|| (x1 * y0).cmp(&(x0 * y1)))
+pub fn arg_cmp(a: &Vector2D, b: &Vector2D) -> Ordering {
+    ((a.y(), a.x()) < (0, 0))
+        .cmp(&((b.y(), b.x()) < (0, 0)))
+        .then_with(|| (b.x() * a.y()).cmp(&(a.x() * b.y())))
 }

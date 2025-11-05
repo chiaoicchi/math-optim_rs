@@ -47,3 +47,7 @@ path = "src/bin/number_theory/factorize.rs"
 [[bin]]
 name = "primitive_root"
 path = "src/bin/number_theory/primitive_root.rs"
+
+[[bin]]
+name = "static_convex_hull"
+path = "src/bin/geo/static_convex_hull.rs"
