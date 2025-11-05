@@ -12,7 +12,7 @@ env:
 
 jobs:
   verify:
-    name: Verify by Library Checker
+    name: ${{ matrix.category }} ${{ matrix.problem }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
