@@ -8,7 +8,7 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
 description = "Competitive programming library in Rust"
-license = "MIT"
+license = "Apache-2.0"
 
 [lib]
 name = "math_optim"
